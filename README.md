@@ -1,243 +1,330 @@
-# -acute-oncology-helper
-A multilingual, voice-enabled acute oncology helper for natural-language symptom assessment, guideline-grounded clinical support, and human review.
+# Acute Oncology Helper
 
-Hackathon prototype — not for clinical use.
-This project is being developed as a proof of concept using synthetic/test patient data. It is not a medical device and must not be used to make clinical decisions or provide autonomous medical advice.
+A multilingual, voice-enabled helper for stable cancer patients to report symptoms and non-clinical queries naturally in their own language, and for Acute Oncology nurses to receive a verified, structured report alongside the relevant UKONS guideline.
 
-The Problem
+**Hackathon prototype — not for clinical use.**
 
-Patients receiving cancer treatment can develop acute symptoms that require timely assessment by an acute oncology service.
+Built for the **Meta AI Developer Hackathon (Cerebral Valley)**.
+Synthetic/test data only. Not a medical device. Must not be used to make clinical decisions or provide autonomous medical advice.
 
-Traditional digital symptom-assessment tools often rely on forms or rigid questionnaires. Patients, however, naturally describe several symptoms together, provide information in different orders, use everyday terminology, and may prefer to communicate by voice or in a language other than English.
+**Clinical Lead:** Medical Oncologist (>5 years experience, Acute Oncology quality improvement and ePROMs experience)
 
-Acute Oncology Helper explores whether multimodal AI can support a more natural interaction while keeping clinical decision-making with healthcare professionals.
+---
 
-The Concept
+## The Problem
 
-Patients communicate naturally using text or voice.
+The 24-hour Acute Oncology helpline is inundated. From local Acute Oncology call audits and presentations, the majority of low-priority calls are **not** acute oncology symptoms:
 
-For example:
+1. **Can't reach other teams:** "When is my next treatment? When is my blood test appointment?"
+2. **General questions:** "Can I have a flu / cold vaccine? Can I eat this food?"
+3. **Confirmations:** "I just want to report I've had my bloods taken" / weekly monitoring patients reporting their blood test is done
 
-“I’ve had diarrhoea about six times since yesterday, I’ve been sick twice and I’m feeling dizzy.”
+These calls consume nursing time during working hours. Urgent patients wait, or cannot get through at all.
 
-The system aims to:
+Patients from our local socially deprived population consistently feedback: the helpline is busy the majority of the time, they have to leave a message, sometimes they don't even bother.
 
-1. Identify all symptoms mentioned by the patient.
-2. Reflect its understanding back to the patient where appropriate.
-3. Explore one symptom at a time using an open question first.
-4. Extract information the patient has already provided.
-5. Compare this with the information required by the relevant acute oncology pathway.
-6. Ask missing or clarification questions individually when required.
-7. Retrieve relevant guideline/pathway evidence.
-8. Produce a structured encounter summary for human clinical review.
+### The Hidden Group: Patients Who Do Not Call At All
 
-The aim is to support clinical information gathering — not to replace clinical judgement.
+There is a second, less visible problem. Patients with language barriers are often **reluctant to speak to the team, or unable to communicate effectively even when they get through.**
 
-Proposed Workflow
+* **Reluctance to speak:** Fear of not being understood, embarrassment discussing diarrhoea, vomiting, bowel, skin or other sensitive symptoms through an interpreter or family member, not wanting to "bother" busy nurses, worry they will be told to come into hospital unnecessarily, and lack of confidence speaking English on the phone to an unknown clinician.
+* **Unable to communicate:** Limited English, low literacy in any language, no family member available to interpret at that moment, chemotherapy-related fatigue and cognitive fog, breathlessness, mouth pain from mucositis, hearing or speech difficulties, and being unable to explain a complex symptom in a short, pressured phone call.
+* **Dependence on others:** Care is delayed until a son, daughter or partner is home to make the call. The history the nurse receives is then second-hand, and sensitive details are often minimised or missed.
 
-Patient contact
-      ↓
-Encounter initialisation
-      ↓
-Patient confirms supplied details
-      ↓
-Encounter ID generated
-      ↓
-Preferred communication language
-      ↓
-Patient-reported cancer and treatment context
-      ↓
-Natural-language symptom description
-(text or voice)
-      ↓
-Transcription safety layer (for voice)
-      ↓
-Clinical information extraction
-      ↓
-Identify all symptoms
-      ↓
-Open exploration of each symptom
-      ↓
-Guideline/pathway gap checking
-      ↓
-Ask unanswered questions individually
-      ↓
-Retrieve relevant guideline evidence
-      ↓
-Structured clinical summary
-      ↓
-Acute Oncology dashboard
-      ↓
-Human clinical review and action
+The result is the same: symptoms are reported **late, incompletely, or not at all.**
 
-Conversational Assessment
+Existing ePROMs do not solve this. A rigid 40-question English form helps patients who can already complete forms in English. It does not help a patient who cannot do a phone call in English.
 
-The project follows a simple conversational principle:
+**Acute Oncology Helper explores a different model:** Let the patient just talk, in their own language, in their own words, at their own pace. The system figures out what they want, verifies it with them, asks only the next relevant question, and does not bombard them with a huge checklist.
 
-Reflect → Open exploration → Extract → Pathway gap-check → Targeted clarification → Next symptom
+---
 
-Rather than immediately presenting a questionnaire, the patient is initially encouraged to describe the problem naturally.
+## Who This Is For — And Who It Is Not For
 
-If required clinical information is not provided spontaneously, the system asks the outstanding questions individually.
+**For:** Stable patients at home, between treatments, who want to report a symptom, log a confirmation, ask a non-urgent question, or complete a scheduled follow-up report without waiting on a busy helpline.
 
-Information that has not been obtained remains explicitly unknown rather than being inferred by the AI.
+**Not for:** Very unwell patients.
 
-Multilingual Voice and Transcription Safety
+If a patient feels very unwell, is deteriorating rapidly, or reports fever on cancer treatment, chest pain, or breathlessness at rest, the system **stops the form**, directs them to call the 24-hour helpline immediately, and flags the incomplete report as priority for the nurse.
 
-Automatic speech recognition can produce plausible but clinically significant errors.
+This is an asynchronous, ePROMs-style reporting service for stable patients. It is not an emergency triage service.
 
-Particular risks include:
+All patients in the intended future service would be given a clear instruction: *If you are unwell, do not fill in this form — call the helpline straight away.*
 
-* medication and cancer-treatment names
-* numbers and symptom frequency
-* temperatures
-* doses
-* duration and dates
-* clinically important negation
-* incorrect language or script detection
+---
 
-The project therefore treats an ASR transcript as potentially uncertain evidence rather than clinical truth.
+## The Concept
 
-The prototype will explore independent transcription/verification approaches and disagreement detection for clinically important information.
+The patient is never presented with a big checklist of problems to click "No" through, like many GP online systems.
 
-Where clinically significant information cannot be established reliably, the system should request clarification rather than guess.
+They are asked one simple thing:
 
-Language Handling
+> "Tell me what you wanted to tell the team today."
 
-Patients explicitly select their preferred communication language rather than relying solely on automatic language detection.
+Patient talks freely (voice or text, English or Urdu for this prototype):
 
-The initial prototype will focus on a small number of representative languages relevant to the local population in Bradford, UK. The purpose is to develop and test the underlying multilingual safety principles rather than claim comprehensive language coverage.
+> *"Assalamualaikum, from morning loose motions, four five times, I had Keytruda three weeks ago..."*
+>
+> *"Today my blood test is done at GP, just wanted to tell the team, every week I do."*
+>
+> *"Can I take the flu injection? My GP is asking, I am on treatment."*
+>
+> *"My next chemo date I don't know, nobody is picking up the phone in the lung team."*
 
-Additional languages could subsequently be validated and added for deployment in other populations.
+The system then aims to:
 
-Encounter and Privacy Architecture
+1. **Infer intent from free talk** — symptom report, confirmation, admin/appointment query, general information question, or message for another team
+2. **Verify intent with one confirmation** — "It sounds like you want to tell us your blood test is done today. Is that right?" `[Yes] [No]`
+3. **Scan the whole utterance for safety phrases** regardless of intent — fever, temperature, chest pain, breathless, feeling very unwell
+4. **Extract facts already provided**, linked to evidence of what the patient actually said
+5. **Compare with information required by the UKONS pathway** for that symptom
+6. **Ask only the next missing or unclear question**, one at a time — RAG is used for *questioning*, not for giving the patient answers
+7. **Verify vague answers to a categorical band** — e.g. "four-five times" → patient taps `[1-3] [4-6] [7-9] [10+]`
+8. **Produce a validated structured report** for nurse review
+9. **Display the source UKONS grading/management excerpt** alongside the report
 
-Patient identity and encounter management are separated from LLM processing.
+The patient never receives a grade, a diagnosis, or treatment advice from the system.
 
-A deterministic application layer is responsible for:
+---
 
-* patient-supplied identification information
-* encounter creation
-* encounter status
-* timestamps
-* communication language
-* patient-reported cancer context
-* patient-reported treatment context
-* queue management
-* human acknowledgement
-* encounter closure
+## Designing for Reluctant and Unable Communicators
 
-After initialisation, an opaque Encounter ID is used within the AI workflow.
+Translation alone is not enough. The prototype is designed to lower the threshold to report:
 
-The LLM should receive only the clinical context necessary for the assessment rather than unnecessary patient identifiers.
+* **Talk, don't type:** Voice-first input in the preferred language (English/Urdu), with audio read-back, so literacy is not required to participate.
+* **At their own pace:** Asynchronous reporting at home. The patient can pause, re-record and correct themselves — unlike a live, pressured helpline call.
+* **Privacy for sensitive symptoms:** Diarrhoea, vomiting, bowel and skin symptoms can be reported privately by voice and categorical taps, without a live interpreter or family member listening.
+* **Verification without interrogation:** If a patient is vague, the system gently asks for one tap to confirm, rather than a nurse repeatedly asking on the phone.
+* **Representative reporting is explicit:** If a family member helps or reports on behalf of the patient, the source is flagged on the dashboard — `Reported by: Daughter, using patient's phone` — so the nurse knows the history is second-hand.
+* **Acknowledgement builds trust:** A silent submission will not be repeated next week. The patient receives: Instant Receipt → Seen by Nurse → Nurse Response, in their language, with audio.
+* **Human route is always visible:** An "I feel worse / I need urgent help" option is on every screen. Digital reporting is an additional route, never the only route.
 
-For the hackathon prototype, patient information is synthetic/test data and is not matched against a real Electronic Patient Record (EPR).
+---
 
-Human in the Loop
+## Two Workflows
 
-The system is designed as clinical decision support rather than autonomous clinical decision-making.
+### 1. Inbound Stable Report
 
-The clinician remains responsible for:
+Patient initiates via a demo link/QR (WhatsApp-style interface for hackathon demonstration only). They report a symptom, confirmation, admin query, or general question.
 
-* reviewing the patient’s information
-* interpreting retrieved guideline evidence
-* resolving uncertainty
-* determining clinical urgency
-* contacting the patient
-* providing clinical advice
-* deciding clinical action
-* closing the encounter
+The system routes it to the correct queue. Most non-clinical reports should never consume Acute Oncology clinical grading time.
 
-The AI cannot autonomously close an encounter.
+**Nurse Dashboard Queues:**
 
-Guideline-Grounded Retrieval
+`PRIORITY INCOMPLETE (safety stop)` | `SYMPTOM REPORTS` | `INFO REQUESTS (vaccine/food)` | `ADMIN / FORWARD TO OTHER TEAM` | `CONFIRMATIONS LOGGED (bloods done)`
 
-The project will explore retrieval-augmented generation (RAG) using acute oncology pathways and guidelines.
+For information requests, the nurse replies asynchronously using approved templates. The system does not give the patient a personalised "yes, you can have this vaccine / eat this" answer.
 
-The intended principle is:
+### 2. Scheduled Follow-Up — Patient-Initiated Reporting
 
-LLM understands the conversation; approved clinical pathways define the assessment.
+Example: A patient is discharged with immune-related diarrhoea and colitis (UKONS Guideline 21) on a reducing steroid taper (Guideline 29). Currently the team make a weekly phone call to check progress.
 
-Relevant source material should be displayed alongside the structured patient summary so that clinicians can review the underlying evidence rather than relying on an unsupported AI conclusion.
+In this model, the nurse instructs the patient **once** at discharge:
 
-Safety Principles
+> "Report every **Monday**, or on any day you feel worse, using the same link. Just talk and tell us it's your weekly check."
 
-The prototype is being designed around several principles:
+**No nurse-generated link per week.** No extra nurse admin.
 
-Use deterministic code for things that must be predictable. Use language models for tasks that genuinely require language understanding.
+The patient reports on Monday. The dashboard links reports into a longitudinal trend:
 
-Never convert missing information into a negative finding.
+Week 1 - Mon: ✓ Received | Stools 4-6 | Blood: No | Steroid taken: Yes Week 2 - Mon: ✓ Received | Stools 1-3 | Blood: No | Steroid missed 2 days ⚠ Week 3 - Mon: ⏳ Due today — Not yet received
 
-Do not silently correct uncertain clinically important information.
 
-Transcription uncertainty should be visible rather than hidden.
+If a report is overdue, it is flagged **OVERDUE**. Non-response is never assumed to mean the patient is well.
 
-The AI should be able to say “unable to determine — requires human review.”
+If a follow-up report shows worsening (e.g. stools back to 7-9, blood returning, fever, steroids stopped), the routine flow stops, the patient is directed to call, and the report is flagged priority.
 
-Clinical decision-making remains with the healthcare professional.
+### Two-Way Communication
 
-Hackathon Scope
+Acknowledgement is a core safety and trust feature:
 
-The initial build will deliberately be narrow.
+1. **System Receipt (instant, not clinical):** "Your report was received at 09:15. It has not yet been reviewed by a nurse."
+2. **Nurse Viewed:** "Seen by Acute Oncology Nurse at 14:10"
+3. **Nurse Response:** Nurse selects an approved response template and can add a short note. The patient receives it in their language as text and audio, and taps `[I understood]`.
 
-The first end-to-end demonstration will focus on a small number of acute oncology scenarios and establish the core architecture before expanding functionality.
+The AI cannot close an encounter. A clinician does.
 
-Planned development sequence:
+---
 
-1. Encounter initialisation
-2. Natural-language symptom extraction
-3. Conversational symptom assessment
-4. Structured clinical state
-5. Guideline/pathway retrieval
-6. Clinician-facing summary/dashboard
-7. Voice transcription
-8. Transcription uncertainty detection
-9. Multilingual interaction
-10. Human acknowledgement and encounter closure
+## Dual Purpose: Patient Facilitation + Nurse Upskilling
 
-Integration with real EPR/PAS systems, validated patient identity matching and production clinical deployment are outside the hackathon scope.
+This is not only about collecting data. It addresses a daily clinician problem:
 
-Technology
+A nurse escalates: *"Doctor, this patient has diarrhoea."*
+The clinician asks: Did you ask about immunotherapy? Last treatment? Blood? Temperature? Stool count above baseline?
+Too often, those questions were not asked — not through lack of care, but because junior, bank, and new-to-oncology nurses cannot be expected to memorise 42 complex UKONS guidelines, especially under staffing pressure.
 
-The prototype is being developed for the Meta AI Developer Hackathon and will explore Meta open-weight models for:
+The nurse dashboard places the guideline card **next to** the patient report:
 
-* natural-language conversation
-* structured clinical information extraction
-* multilingual understanding
-* audio/transcription workflows
-* guideline-grounded retrieval
+| Left: Patient Report | Right: UKONS Teaching Card |
+| :--- | :--- |
+| What the patient actually said (verbatim) | Source guideline, number and page (e.g. UKONS V4 G21, p28) |
+| Verified facts in green, Unknowns in red | Grading table, with the criteria matching this patient highlighted |
+| Treatment history as reported | What would change the grade (grade boundaries) |
+| Missing information flagged | Investigations and checks the nurse still needs to do |
+| Trend across weeks for follow-ups | Management excerpt by grade, and cross-references (e.g. to Guideline 12 Neutropenic Sepsis) |
 
-Hackathon inference partners may be used for model serving and experimentation.
+The system **never pre-selects a grade**. The nurse reviews, verifies verbally where needed, assigns the grade herself, and decides the action.
 
-The application architecture is intentionally model- and infrastructure-aware so that individual components can be evaluated and replaced independently.
+In doing so, she learns the guideline in the workflow, at the point of care. After reviewing 20 diarrhoea reports this way, a junior nurse builds real competence — without needing to be taken off a short-staffed rota for a training day. This is just-in-time upskilling for a stretched workforce.
 
-Prior Work and Hackathon Development
+---
 
-Previous exploratory work considered acute oncology digital forms, guideline retrieval/RAG concepts and possible conversational workflows.
+## Model Architecture — 100% Meta Models
 
-This repository represents the new hackathon implementation integrating natural-language interaction, multilingual voice processing, transcription-safety mechanisms, structured clinical assessment, guideline-grounded retrieval and human clinical review.
+Built for the Meta AI Developer Hackathon on Meta open models. No competitor ASR or LLM models.
 
-Development undertaken during the hackathon will be documented through this repository’s commit history.
+| Logical Agent | Meta Model | Responsibility |
+| :--- | :--- | :--- |
+| [0] Intent Agent | Llama 4 Scout | Infers intent from free talk: symptom / confirmation / admin / info / message for other team |
+| [1] Transcription Agent | SeamlessM4T v2 Large | Urdu audio → Urdu transcript + English translation |
+| [2] Transcription Verification Agent | Llama 4 Scout | Flags numbers, negation, medication names, temperatures and durations for patient tap-confirmation |
+| Safety Gate | Llama Guard 4 + deterministic rules | Detects fever / urgency in any utterance → stops form, directs to helpline |
+| [3] Clinical Fact Extraction Agent | Llama 4 Maverick | Extracts structured facts **only with an evidence span** from what the patient said |
+| [4] Extraction Checker Agent | Llama 4 Maverick (independent call) | Rejects facts if a number changed, negation was flipped, meaning was inferred, or "don't know" became "no". It cannot rewrite facts. |
+| [5] Guideline Agent | Deterministic state | Loads the UKONS-required information set for the selected symptom from the Question Registry |
+| [6] Missing-Information Agent | Llama 4 Scout + state machine | Required information − validated facts = only the next question. Stops early; does not ask 40 questions. |
+| [7] Question / Language Agent | SeamlessM4T v2 Large | Converts an approved question template, and nurse acknowledgement, into simple Urdu text + audio |
 
-Future Development
+Deterministic Python application code handles encounter state, queues, IDs, timestamps, and hard safety rules. Language models are used only for tasks that require language understanding.
 
-Potential future work includes:
+### Hybrid Question Model — ePROMs-Style Fixed Data + Free Speech
 
-* EPR/PAS integration
-* authoritative treatment-record integration
-* broader acute oncology pathway coverage
-* validation across additional languages
-* formal ASR performance evaluation
-* clinical safety testing
-* information-governance assessment
-* validated prioritisation models
-* production-grade messaging integration
-* prospective clinical evaluation
+Not all UKONS questions can be safely asked in the same way. Each question in the Registry is classified:
 
-Disclaimer
+* **Type A — Fixed Categorical Only:** Large tap buttons for grade-defining facts.
+  *Stools above normal? `[1-3] [4-6] [7-9] [10+] [Don't Know]`*
+* **Type B — Voice First, Then Tap to Confirm:** Patient speaks naturally in their language; the system proposes a category; the patient confirms it.
+  *Used for treatment names and symptom descriptions.*
+* **Type C — Nurse Only, Never Ask the Patient:** Information a patient cannot reliably provide.
+  *e.g. neutrophil count, NEWS score, DPD deficiency consideration, blood results. These appear on the teaching card as nurse checks.*
+
+Free speech is an input method. The clinical record is always a confirmed categorical fact, or an explicitly flagged `UNKNOWN`.
+
+---
+
+## Safety Principles
+
+1. **Talk-first, no bombardment.** No 20-item checklist for patients to click "No" through to reach the questionnaire.
+2. **Stable patients only by design.** A simple front gate in the patient's language: "I feel very unwell and need help now" vs "I feel stable to report my symptoms".
+3. **Fever on cancer treatment is a hard stop.** It overrides diarrhoea, admin, confirmation and every other intent. The form stops and the patient is directed to call. (UKONS Guideline 12)
+4. **Transcription is uncertain evidence, not truth.** Medication names, numbers, temperatures, doses, durations and negation always require verification.
+5. **No evidence span = no fact.** Every extracted fact must link to what the patient said or tapped.
+6. **Unknown is never a negative.** Missing information is displayed in red as `UNKNOWN / NOT ASKED`, never silently converted to "No".
+7. **Maximum 2 clarifications per fact.** After that, flag as unknown for the nurse. Do not exhaust an unwell patient.
+8. **Patient-reported data is not a clinical grade.** The nurse confirms the UKONS grade after review, examination and results where required.
+9. **The AI cannot close an encounter,** give treatment advice to a patient, or send a clinical reply without nurse approval.
+10. **Acknowledgement is mandatory.** Submission into a black hole destroys trust and future reporting.
+
+---
+
+## Guideline-Grounded Retrieval
+
+Retrieval-Augmented Generation (RAG) in this project retrieves **questions to ask and source excerpts to show the nurse** — not treatment answers to give the patient.
+
+**Source:** UKONS Acute Oncology Initial Management Guidelines **Version 4.0 (13.02.2023)**
+
+**Deep module for the demo:** Diarrhoea — a critical safety distinction
+* Guideline 6: Diarrhoea (SACT-related, p13) — e.g. capecitabine / 5FU / irinotecan
+* Guideline 21: Diarrhoea & Colitis (immune-related adverse event, p28) — immunotherapy
+
+Both present with 4-6 stools/day at Grade 2, but their pathways are different. Correct capture of treatment history is therefore the key routing question, and both excerpts are shown to the nurse for diarrhoea so she can confirm the route.
+
+**Follow-up module:** Guideline 29 Steroid Tapering Guidance (p36)
+**Hard-stop module:** Guideline 12 Suspected Neutropenic Sepsis (p19)
+
+Grading and management excerpts on the nurse card are manually curated for the demo symptoms to be faithful to source, with guideline number and page number displayed for verification.
+
+---
+
+## Encounter and Privacy Architecture
+
+A deterministic application layer manages: encounter creation, opaque Encounter ID, status, timestamps, preferred language, queue management, human acknowledgement and closure.
+
+The LLM receives only the clinical context necessary for extraction, not unnecessary patient identifiers.
+
+**Hackathon demo constraints:**
+* Synthetic patient data only
+* No real patient data, no EPR/PAS matching
+* WhatsApp-style interface is a demonstration interface only, not a production WhatsApp integration
+* Demo data is deleted after use
+
+Production identity verification, EPR/SACT authoritative treatment lookup, NHS Login, UK data hosting, DPIA, DCB0129 clinical safety case and DTAC assessment are explicitly **future work**.
+
+---
+
+## 7-Day Solo Execution Plan
+
+This is a solo clinician-led build, supported by Meta models, over 1 week within a $150 Meta API credit budget (Llama API only; SeamlessM4T v2 is an open Meta model served via Hugging Face).
+
+| Phase | Day | Work Completed By | Deliverable |
+| :--- | :--- | :--- | :--- |
+| **Phase 0: Clinical Content Lock** | 1 | Clinician | Diarrhoea Question Registry (A/B/C classified), closed drug list, UKONS G6/G21 teaching cards. Urdu wording verified by clinical lead. |
+| **Phase 1: Golden Cases & Safety Rules** | 2 | Clinician + Python rules | 10 synthetic cases from call audit (admin, confirmation, diarrhoea, follow-up, fever). Expected intent, band, route and unknowns for each. |
+| **Phase 2: Talk-First Patient App** | 3 | Llama 4 Scout + SeamlessM4T | WhatsApp-style Streamlit app. Stable gate → free talk → intent inference → 1-tap intent verification. |
+| **Phase 3: Verification Pipeline** | 4 | Llama 4 Maverick + Rules | Transcription verification, extraction with evidence spans, independent checker rejecting changed numbers/negation. Final patient read-back in Urdu. |
+| **Phase 4: Nurse Dashboard** | 5 | Streamlit | Queues, verified/unknown report, UKONS teaching card side-by-side, nurse grade assignment, acknowledgement templates. |
+| **Phase 5: Monday Follow-Up** | 5-6 | State machine | Steroid taper trend view (Week 1 vs Week 2), overdue flag, priority flag on worsening. |
+| **Phase 6: Testing** | 6 | Automated golden-case run | Pass criteria: 100% immunotherapy recognition, 100% fever hard-stop, 0 unknown→no conversions, 0 facts without evidence. |
+| **Phase 7: Demo & Pitch** | 7 | Clinician | 3-case live demo, results, scalability assessment, future roadmap. $50 API reserve held for live judging. |
+
+**Scalability test for the hackathon:**
+1. Can an Urdu-speaking patient complete a stable report unaided in < 3 minutes?
+2. Do critical facts (immunotherapy status, blood, stool band) survive verification in 10/10 golden cases?
+3. Can a junior nurse review a structured report in < 60 seconds compared with a voicemail callback?
+
+---
+
+## Hackathon Scope
+
+**In scope:**
+English + Urdu, talk-first intent routing, Diarrhoea deep module, Fever hard-stop, confirmation/admin/info routing, Monday steroid-taper follow-up with two-way acknowledgement, nurse dashboard with teaching card.
+
+**Out of scope (Future Phase):**
+Production messaging channels, real patient deployment, EPR/PAS and SACT system integration, validated identity matching, additional languages, all 42 UKONS guidelines, formal clinical validation and regulatory approval.
+
+The initial prototype focuses on representative languages relevant to the local population in Bradford, UK, where there is significant social deprivation and language-related health inequality. The purpose is to develop and test the underlying multilingual safety principles, not to claim comprehensive language coverage. Additional languages would be validated and added subsequently.
+
+---
+
+## Technology
+
+* **Llama 4 Scout** — fast intent routing, transcription verification, missing-information logic
+* **Llama 4 Maverick** — high-accuracy structured extraction and independent checking
+* **Llama Guard 4** — safety classification for urgent mentions
+* **SeamlessM4T v2 Large** — Meta's open speech model: Urdu speech in, Urdu speech out for patient questions and nurse acknowledgements
+* **Streamlit (Python)** — demonstration patient interface and nurse dashboard
+* **Deterministic Python** — encounter state, question registry, safety hard-stops, number/negation/drug rules, queues
+
+Architecture is model-aware so individual components can be evaluated and replaced independently.
+
+---
+
+## Prior Work
+
+The clinical lead has undertaken multiple Acute Oncology quality improvement projects, presentations analysing why patients call the helpline and common presenting symptoms, and work involving ePROMs. This repository represents the new hackathon implementation integrating that prior learning with natural-language interaction, multilingual voice, transcription safety, guideline-grounded question retrieval, and human clinical review.
+
+Development during the hackathon will be documented through this repository's commit history.
+
+---
+
+## Future Development
+
+* Invited, EPR-linked patient access with authoritative SACT/immunotherapy treatment lookup (removing reliance on patient recall for pathway routing)
+* Validation of additional Bradford-relevant languages through forward/back-translation and patient co-design
+* Automated reminders for overdue follow-up reports
+* Broader UKONS pathway coverage with senior nurse sign-off per guideline card
+* Formal ASR performance evaluation in Urdu for clinical vocabulary
+* Clinical safety testing, information governance, DCB0129 / DTAC
+* Prospective pilot with the Acute Oncology team measuring helpline diversion, nurse time saved, junior nurse competency development, and reporting rates among patients with language barriers
+
+---
+
+## Disclaimer
 
 Acute Oncology Helper is an experimental hackathon prototype.
 
-It is not validated for clinical use, is not intended to diagnose or treat disease, and must not be used to replace professional medical assessment or emergency services.
+It is not validated for clinical use, is not intended to diagnose or treat disease, and must not be used to replace professional medical assessment, the 24-hour Acute Oncology helpline, or emergency services.
 
-All prototype demonstrations should use synthetic or appropriately non-identifiable test data.
+All prototype demonstrations must use synthetic or appropriately non-identifiable test data.
+

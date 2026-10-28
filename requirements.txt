@@ -1,0 +1,2 @@
+# Runtime is stdlib-only. Test tooling:
+pytest>=7

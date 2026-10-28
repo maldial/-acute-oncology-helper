@@ -1,0 +1,10 @@
+{
+  "version": "0.1.0-demo",
+  "status": "DEMO closed list for the diarrhoea module. Patient free text is matched against aliases, then tap-confirmed. Unmatched entries are flagged for the nurse, never guessed.",
+  "drugs": [
+    {"generic": "capecitabine", "aliases": ["capecitabine", "xeloda"]},
+    {"generic": "fluorouracil", "aliases": ["fluorouracil", "5-fu", "5fu"]},
+    {"generic": "irinotecan", "aliases": ["irinotecan"]},
+    {"generic": "pembrolizumab", "aliases": ["pembrolizumab", "keytruda"]}
+  ]
+}

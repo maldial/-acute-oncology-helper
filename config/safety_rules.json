@@ -1,0 +1,12 @@
+{
+  "status": "DEMO - NOT A CLINICAL SAFETY POLICY. Replace with clinically approved rules before any real use.",
+  "version": "0.1.0-demo",
+  "match": "substring_casefold",
+  "rules": [
+    {"rule_id": "DEMO_FEVER", "label": "Fever / high temperature (demo)", "phrases": ["fever", "temperature", "38"]},
+    {"rule_id": "DEMO_CHEST_PAIN", "label": "Chest pain (demo)", "phrases": ["chest pain", "pain in my chest", "pain in chest"]},
+    {"rule_id": "DEMO_BREATHLESS", "label": "Breathlessness (demo)", "phrases": ["breathless", "short of breath", "can't breathe", "cannot breathe", "difficulty breathing"]},
+    {"rule_id": "DEMO_VERY_UNWELL", "label": "Feeling very unwell / deteriorating (demo)", "phrases": ["very unwell", "deteriorating", "getting worse quickly"]},
+    {"rule_id": "DEMO_COLLAPSE", "label": "Collapse / unconscious (demo)", "phrases": ["collapsed", "unconscious", "passed out", "fainted"]}
+  ]
+}

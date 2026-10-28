@@ -1,0 +1,11 @@
+{
+  "guideline_id": "UKONS-V4-G06",
+  "title": "Diarrhoea (SACT-related)",
+  "source": "UKONS Acute Oncology Initial Management Guidelines Version 4.0 (13.02.2023)",
+  "page": 13,
+  "status": "EXCERPTS_PENDING_CLINICAL_CURATION - grading and management excerpts must be transcribed from the source document by the clinical lead before any nurse-facing display.",
+  "grading_table": [],
+  "management_by_grade": {},
+  "cross_references": ["UKONS-V4-G21", "UKONS-V4-G12"],
+  "nurse_checks": ["neutrophil_count", "news_score"]
+}

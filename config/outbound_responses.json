@@ -1,0 +1,12 @@
+{
+  "status": "Prototype fixed texts. No LLM-generated outgoing content.",
+  "responses": {
+    "CLINICAL_PIPELINE": "Thank you. I need to ask you some questions about this.",
+    "CLARIFICATION": "Could you tell me briefly what you are contacting the Acute Oncology team about?",
+    "CONFIRMATIONS_QUEUE": "[PROTOTYPE PLACEHOLDER] Thank you - your confirmation has been logged for the team.",
+    "ADMIN_QUEUE": "[PROTOTYPE PLACEHOLDER] Thank you - the team will pick up your appointment query.",
+    "INFO_QUEUE": "[PROTOTYPE PLACEHOLDER] Thank you - a nurse will reply to your question.",
+    "FORWARD_QUEUE": "[PROTOTYPE PLACEHOLDER] Thank you - your message will be passed to the other team.",
+    "SAFETY_ESCALATION": "[PROTOTYPE SAFETY MESSAGE - REPLACE WITH CLINICALLY APPROVED TEXT] Please call {helpline} immediately. Do not wait for a reply here."
+  }
+}

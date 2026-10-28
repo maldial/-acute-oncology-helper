@@ -1,0 +1,68 @@
+{
+  "symptom": "diarrhoea",
+  "version": "0.1.0-demo",
+  "status": "DEMO - question wording provisional. Urdu text pending clinical-lead review. Fever is a hard stop handled by the Safety Gate, never a registry question.",
+  "ukons_refs": ["UKONS-V4-G06", "UKONS-V4-G21"],
+  "questions": [
+    {
+      "id": "stools_above_normal",
+      "type": "A",
+      "en_text": "In the last 24 hours, how many more stools than is normal for you have you had?",
+      "ur_text": null,
+      "ur_status": "PENDING_CLINICAL_REVIEW",
+      "options": ["1-3", "4-6", "7-9", "10+", "Don't know"],
+      "maps_to_fact": "stool_count_band",
+      "required": true
+    },
+    {
+      "id": "blood_in_stool",
+      "type": "A",
+      "en_text": "Have you seen blood in your stools?",
+      "ur_text": null,
+      "ur_status": "PENDING_CLINICAL_REVIEW",
+      "options": ["Yes", "No", "Don't know"],
+      "maps_to_fact": "blood_in_stool",
+      "required": true
+    },
+    {
+      "id": "current_treatment",
+      "type": "B",
+      "en_text": "What cancer treatment are you currently having?",
+      "ur_text": null,
+      "ur_status": "PENDING_CLINICAL_REVIEW",
+      "confirmation_source": "closed_drug_list",
+      "maps_to_fact": "current_treatment",
+      "required": true
+    },
+    {
+      "id": "symptom_description",
+      "type": "B",
+      "en_text": "In your own words, describe what has been happening.",
+      "ur_text": null,
+      "ur_status": "PENDING_CLINICAL_REVIEW",
+      "confirmation_source": "patient_readback",
+      "maps_to_fact": "symptom_description",
+      "required": false
+    },
+    {
+      "id": "neutrophil_count",
+      "type": "C",
+      "en_text": "Record the most recent neutrophil count.",
+      "ur_text": null,
+      "ur_status": "NOT_APPLICABLE_NURSE_ONLY",
+      "nurse_check": "Nurse only - never ask the patient. Record most recent neutrophil count from results.",
+      "maps_to_fact": "neutrophil_count",
+      "required": false
+    },
+    {
+      "id": "news_score",
+      "type": "C",
+      "en_text": "Record the NEWS2 score.",
+      "ur_text": null,
+      "ur_status": "NOT_APPLICABLE_NURSE_ONLY",
+      "nurse_check": "Nurse only - never ask the patient. Record NEWS2 score from observations.",
+      "maps_to_fact": "news_score",
+      "required": false
+    }
+  ]
+}
